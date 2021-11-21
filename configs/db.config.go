@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"clean-architecture-go/entities"
 	"fmt"
 	"os"
 
@@ -27,8 +28,11 @@ func SetupDBConnection() *gorm.DB {
 	if err != nil {
 		panic("Failed to create a connection to database")
 	}
-	
-	// db.AutoMigrate(&entity.Book{}, &entity.User{})
+
+	err = db.AutoMigrate(&entities.Book{}, &entities.User{})
+	if err != nil {
+		panic("Failed to migrate tables")
+	}
 	return db
 }
 
